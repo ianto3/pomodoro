@@ -1,11 +1,11 @@
 import React from 'react'
 
-const SessionControls = ({ time, incrementFunc, decrementFunc }) => {
+const SessionControls = ({ time, incrementFunc, decrementFunc, timerIsRunning }) => {
     return (
-        <div className="control-timer">
-            <button className="increment-button" onClick={incrementFunc}>up</button>
-            <span>{time}</span>
-            <button className="decrement-button" onClick={decrementFunc}>down</button>
+        <div className="timer-controls">
+            <button className="increment-button" onClick={incrementFunc} disabled={timerIsRunning}>up</button>
+            <span className="time-set">{time}</span>
+            <button className="decrement-button" onClick={decrementFunc} disabled={timerIsRunning}>down</button>
         </div>
     )
 }
