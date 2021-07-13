@@ -6,7 +6,7 @@ import './App.css';
 
 function App() {
 
-  const [sessionLength, setSessionLength] = useState(25);
+  const [sessionLength, setSessionLength] = useState(20);
   const [breakLength, setBreakLength] = useState(5);
   const [timerIsRunning, setTimerIsRunning] = useState(false);
 

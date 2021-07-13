@@ -25,6 +25,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: #282c34;
+  color: #e27900;
 }
 
 img {
@@ -63,7 +64,6 @@ h3 {
 .App {
   height: 100vh;
   width: 100vw;
-  color: #e27900;
 }
 
 .container{
@@ -112,34 +112,36 @@ h3 {
   border-bottom: 1.5rem solid aqua;
 }
 
+.time-phase{
+  position: absolute;
+  top: 18%;
+  font-size: 3rem;
+  letter-spacing: 0.3rem;
+  text-shadow: 3px 3px 5px rgba(0, 0, 0, 0.6);
+}
+
 .time{
   font-size: 6.5rem;
   text-shadow: 3px 3px 5px rgba(0, 0, 0, 0.6);
   letter-spacing: 0.2rem;
-  /* text-shadow: 0 0 3px rgba(var(--orangergb), 0.7); */
 }
 
 .time.final-countdown {
   padding: 0.4rem;
   font-size: 10rem;
   border-radius: 50%;
-  /* text-shadow: 0 0 3px rgba(var(--orangergb), 0.7); */
-  /* animation: digit-pulse 1s infinite; */
 }
 
 @keyframes digit-pulse {
   0% {
-    /* box-shadow: 0 0 0 0 rgba(var(--orangergb), 0.5); */
     text-shadow: 0 0 0 rgba(var(--orangergb), 0.5);
   }
   
   70% {
-    /* box-shadow: 0 0 0 80px rgba(var(--orangergb), 0); */
     text-shadow: 0 0 80px rgba(var(--orangergb), 0);
   }
   
   100% {
-    /* box-shadow: 0 0 0 0 rgba(var(--orangergb), 0); */
     text-shadow: 0 0 0 rgba(var(--orangergb), 0);
   }
 }
@@ -150,37 +152,42 @@ h3 {
   width: 100%;
   transform: rotate(0deg);
   transition: all 1s linear;
+  border-radius: 50%;
 }
 
+.time-indicator.active{
+  animation: orange-pulse 1s infinite;
+}
+
+@keyframes orange-pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(var(--orangergb), 0.7);
+  }
+  
+  70% {
+    box-shadow: 0 0 0 30px rgba(var(--orangergb), 0);
+  }
+  
+  100% {
+    box-shadow: 0 0 0 0 rgba(var(--orangergb), 0);
+  }
+}
+
+/* Orbiting indicator */
 .time-indicator::after{
   position: absolute;
   inset: 0;
-  top: -1rem;
+  top: -1.2rem;
   margin-left: auto;
   margin-right: auto;
   left: 0;
   right: 0;
   content: "";
-  height: 2rem;
-  width: 2rem;
+  height: 2.4rem;
+  width: 2.4rem;
   background-color: aqua;
   border-radius: 50%;
   box-shadow: 0 0 10px aqua;
-  animation: aqua-pulse 1s infinite;
-}
-
-@keyframes aqua-pulse {
-  0% {
-    box-shadow: 0 0 0 0 rgba(var(--aquargb), 0.7);
-  }
-  
-  70% {
-    box-shadow: 0 0 0 10px rgba(var(--aquargb), 0);
-  }
-  
-  100% {
-    box-shadow: 0 0 0 0 rgba(var(--aquargb), 0);
-  }
 }
 
 .timer-btns{
@@ -210,9 +217,14 @@ h3 {
   }
 }
 
-.timer-btns button img:hover{
-  transform: scale(1.1);
+.timer-btns button:hover{
+  transform: scale(1.05);
   filter: drop-shadow(5px 5px 5px rgba(0, 0, 0, 0.8));
+}
+
+.timer-btns button:active{
+  transform: scale(0.95);
+  filter: drop-shadow(1px 1px 5px rgba(0, 0, 0, 0.8));
 }
 
 .settings-controllers{
@@ -259,13 +271,13 @@ h3 {
 .timer-controls button {
   background-color: transparent;
   border: none;
+  filter: drop-shadow(3px 3px 5px rgba(0, 0, 0, 0.8));
+  transition: all 0.1s ease-in-out;
 }
 
 .timer-controls button img{
   width: 2.5rem;
   opacity: 0.9;
-  filter: drop-shadow(3px 3px 5px rgba(0, 0, 0, 0.8));
-  transition: all 0.3s ease-in-out;
 }
 
 @media only screen and (min-width: 48em) {
@@ -274,11 +286,16 @@ h3 {
   }
 }
 
-.timer-controls button img:hover{
-  transform: scale(1.1);
+.timer-controls button:hover{
+  transform: scale(1.05);
   filter: drop-shadow(5px 5px 5px rgba(0, 0, 0, 0.8));
 }
 
-.timer-controls button:disabled img{
+.timer-controls button:active{
+  transform: scale(0.95);
+  filter: drop-shadow(1px 1px 5px rgba(0, 0, 0, 0.8));
+}
+
+.timer-controls button:disabled{
   opacity: 0.3;
 }

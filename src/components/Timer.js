@@ -3,8 +3,8 @@ import useInterval from '../hooks/useInterval';
 
 const Timer = ({ sessionLength, breakLength, isTimerRunning }) => {
 
-    const sessionTime = "session";
-    const breakTime = "break";
+    const sessionTime = "Session";
+    const breakTime = "Break";
     const timerIndicator = document.querySelector(".time-indicator");
 
     const [play, setPlay] = useState(false);
@@ -18,6 +18,7 @@ const Timer = ({ sessionLength, breakLength, isTimerRunning }) => {
     const pad = (num) => {
         return num < 10 ? "0" + num : num;
     }
+
 
     const rotateIndicator = (phase, minutes, seconds) => {
         const totalTime = (phase === sessionTime ? sessionLength : breakLength) * 60;
@@ -37,14 +38,20 @@ const Timer = ({ sessionLength, breakLength, isTimerRunning }) => {
         }
     }
 
+
     // Control deactivation of timer settings while running countdown
     useEffect(() => {
         if (play) {
             isTimerRunning(true);
+            timerIndicator.classList.add("active");
         } else {
             isTimerRunning(false);
+            // Condition avoids error on loading component since element is null at mount
+            if (timerIndicator) {
+                timerIndicator.classList.remove("active");
+            }
         }
-    }, [play])
+    }, [play, isTimerRunning, timerIndicator])
 
 
     // Handle dynamic changes to settings while running
@@ -53,14 +60,14 @@ const Timer = ({ sessionLength, breakLength, isTimerRunning }) => {
             setMinutes(sessionLength);
             setSeconds(0);
         }
-    }, [sessionLength])
+    }, [sessionLength, phase])
 
     useEffect(() => {
         if (phase === breakTime) {
             setMinutes(breakLength);
             setSeconds(0);
         }
-    }, [breakLength])
+    }, [breakLength, phase])
 
 
     // Counter funcionality
@@ -101,16 +108,17 @@ const Timer = ({ sessionLength, breakLength, isTimerRunning }) => {
         <>
             <div className="time-display">
                 <div className="time-indicator"></div>
-                {(minutes === 0 && seconds < 10)
+                <span className="time-phase">{phase}</span>
+                {(minutes === 0 && seconds <= 10)
                     ? <span className="time final-countdown">{seconds}</span>
                     : <span className="time">{pad(minutes)}:{pad(seconds)}</span>}
             </div>
             <div className="timer-btns">
                 <button className="play-btn" onClick={() => setPlay(!play)}>
-                    <img src={process.env.PUBLIC_URL + `/assets/icons/${play ? "pause" : "play"}.svg`} />
+                    <img src={process.env.PUBLIC_URL + `/assets/icons/${play ? "pause" : "play"}.svg`} alt={play ? "pause" : "play"} />
                 </button>
                 <button className="reset-btn" onClick={reset}>
-                    <img src={process.env.PUBLIC_URL + `/assets/icons/reset.svg`} />
+                    <img src={process.env.PUBLIC_URL + `/assets/icons/reset.svg`} alt="reset" />
                 </button>
             </div>
 
