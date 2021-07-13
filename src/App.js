@@ -18,7 +18,8 @@ function App() {
   }
 
   const reduceSessionLength = () => {
-    if (sessionLength > 0) {
+    if (sessionLength > 1) {
+      console.log(sessionLength)
       setSessionLength(prevLength => prevLength - 1);
     }
   }
@@ -30,7 +31,7 @@ function App() {
   }
 
   const reduceBreakLength = () => {
-    if (breakLength > 0) {
+    if (breakLength > 1) {
       setBreakLength(prevBreak => prevBreak - 1)
     }
   }
@@ -42,16 +43,24 @@ function App() {
   }
 
   return (
-    <div className="App container">
-      <h1>
-        Pomodoro Tracker
-      </h1>
-      <div className="timer">
-        <Timer sessionLength={sessionLength} breakLength={breakLength} isTimerRunning={isTimerRunning} />
-      </div>
-      <div className="settings-controllers">
-        <SetTimer time={sessionLength} incrementFunc={addSessionLength} decrementFunc={reduceSessionLength} timerIsRunning={timerIsRunning} />
-        <SetTimer time={breakLength} incrementFunc={addBreakLength} decrementFunc={reduceBreakLength} timerIsRunning={timerIsRunning} />
+    <div className="App">
+      <div className="container">
+        <h1>
+          Pomodoro Tracker
+        </h1>
+        <div className="timer">
+          <Timer sessionLength={sessionLength} breakLength={breakLength} isTimerRunning={isTimerRunning} />
+        </div>
+        <div className="settings-controllers">
+          <div className="settings-group">
+            <h3>Session Length</h3>
+            <SetTimer time={sessionLength} incrementFunc={addSessionLength} decrementFunc={reduceSessionLength} timerIsRunning={timerIsRunning} />
+          </div>
+          <div className="settings-group">
+            <h3>Break Length</h3>
+            <SetTimer time={breakLength} incrementFunc={addBreakLength} decrementFunc={reduceBreakLength} timerIsRunning={timerIsRunning} />
+          </div>
+        </div>
       </div>
     </div>
   );
