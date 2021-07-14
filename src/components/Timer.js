@@ -13,6 +13,8 @@ const Timer = ({ sessionLength, breakLength, isTimerRunning }) => {
     const [phase, setPhase] = useState(sessionTime);
     const [totalDeg, setTotalDeg] = useState(0);
 
+    const [audio] = useState(new Audio(process.env.PUBLIC_URL + "/assets/sounds/alarm.mp3"));
+
 
     // Add 0 before digit if needed for display
     const pad = (num) => {
@@ -24,7 +26,7 @@ const Timer = ({ sessionLength, breakLength, isTimerRunning }) => {
         const totalTime = (phase === sessionTime ? sessionLength : breakLength) * 60;
         const degreeTick = 360 / totalTime;
         const timeElapsed = totalTime - (minutes * 60 + seconds) + 1;
-        const newDegPosition = timeElapsed * degreeTick;
+        const newDegPosition = timeElapsed * degreeTick + degreeTick / 2;
 
         if (newDegPosition >= 360) {
             timerIndicator.style.transform = `rotate(${totalDeg + 360}deg)`;
@@ -33,6 +35,7 @@ const Timer = ({ sessionLength, breakLength, isTimerRunning }) => {
             timerIndicator.style.transform = `rotate(${totalDeg + newDegPosition}deg)`;
         }
 
+        // Keep adding degrees to avoid counterclockwise animation to reset degrees each turn
         if (minutes === 0 && seconds === 0) {
             setTotalDeg(prevTotalDeg => prevTotalDeg + 360);
         }
@@ -54,7 +57,7 @@ const Timer = ({ sessionLength, breakLength, isTimerRunning }) => {
     }, [play, isTimerRunning, timerIndicator])
 
 
-    // Handle dynamic changes to settings while running
+    // Handle dynamic changes to settings
     useEffect(() => {
         if (phase === sessionTime) {
             setMinutes(sessionLength);
@@ -84,6 +87,7 @@ const Timer = ({ sessionLength, breakLength, isTimerRunning }) => {
                     setPhase(sessionTime);
                     setMinutes(sessionLength);
                 }
+                audio.play();
             }
         } else {
             setSeconds(prevSec => prevSec - 1);
@@ -92,7 +96,6 @@ const Timer = ({ sessionLength, breakLength, isTimerRunning }) => {
     }
 
     useInterval(counter, play ? 1000 : null);
-
 
     // Handle timer reset
     const reset = () => {

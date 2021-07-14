@@ -134,20 +134,6 @@ h3 {
   border-radius: 50%;
 }
 
-@keyframes digit-pulse {
-  0% {
-    text-shadow: 0 0 0 rgba(var(--orangergb), 0.5);
-  }
-  
-  70% {
-    text-shadow: 0 0 80px rgba(var(--orangergb), 0);
-  }
-  
-  100% {
-    text-shadow: 0 0 0 rgba(var(--orangergb), 0);
-  }
-}
-
 .time-indicator{
   position: absolute;
   height: 100%;
