@@ -22,7 +22,7 @@ const Timer = ({ sessionLength, breakLength, isTimerRunning }) => {
     }
 
 
-    const rotateIndicator = (phase, minutes, seconds) => {
+    const rotateOrb = (phase, minutes, seconds) => {
         const totalTime = (phase === sessionTime ? sessionLength : breakLength) * 60;
         const degreeTick = 360 / totalTime;
         const timeElapsed = totalTime - (minutes * 60 + seconds) + 1;
@@ -40,6 +40,21 @@ const Timer = ({ sessionLength, breakLength, isTimerRunning }) => {
             setTotalDeg(prevTotalDeg => prevTotalDeg + 360);
         }
     }
+
+
+    // Toggle play with spacebar
+    const keypress = (ev) => {
+        if (ev.key === " ") {
+            setPlay(!play);
+        }
+    }
+
+    useEffect(() => {
+        window.addEventListener("keydown", keypress);
+        return () => {
+            window.removeEventListener("keydown", keypress);
+        }
+    })
 
 
     // Control deactivation of timer settings while running countdown
@@ -92,7 +107,7 @@ const Timer = ({ sessionLength, breakLength, isTimerRunning }) => {
         } else {
             setSeconds(prevSec => prevSec - 1);
         }
-        rotateIndicator(phase, minutes, seconds);
+        rotateOrb(phase, minutes, seconds);
     }
 
     useInterval(counter, play ? 1000 : null);
@@ -103,7 +118,9 @@ const Timer = ({ sessionLength, breakLength, isTimerRunning }) => {
         setPhase(sessionTime);
         setMinutes(sessionLength);
         setSeconds(0);
-        timerIndicator.style.transform = `rotate(${totalDeg}deg)`;
+        if (timerIndicator) {
+            timerIndicator.style.transform = `rotate(${totalDeg}deg)`;
+        }
     }
 
 
@@ -124,6 +141,9 @@ const Timer = ({ sessionLength, breakLength, isTimerRunning }) => {
                     <img src={process.env.PUBLIC_URL + `/assets/icons/reset.svg`} alt="reset" />
                 </button>
             </div>
+            <p className="key-instructions">
+                Press <kbd>Space</kbd> to toggle the countdown!
+            </p>
 
         </>
     )
