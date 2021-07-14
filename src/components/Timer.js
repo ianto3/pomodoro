@@ -128,7 +128,7 @@ const Timer = ({ sessionLength, breakLength, isTimerRunning }) => {
         <>
             <div className="time-display">
                 <div className="time-indicator"></div>
-                <span className="time-phase">{phase}</span>
+                <span className="time-phase" style={{ color: phase === sessionTime ? "rgb(226,121,0)" : "rgb(0,255,255)" }}>{phase}</span>
                 {(minutes === 0 && seconds <= 10)
                     ? <span className="time final-countdown">{seconds}</span>
                     : <span className="time">{pad(minutes)}:{pad(seconds)}</span>}

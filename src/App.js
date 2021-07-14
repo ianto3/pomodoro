@@ -43,11 +43,14 @@ function App() {
   }
 
   return (
-    <div className="App">
-      <div className="container">
+    <>
+      <header className="container">
         <h1>
           Pomodoro Tracker
         </h1>
+      </header>
+
+      <main className="container">
         <div className="timer">
           <Timer sessionLength={sessionLength} breakLength={breakLength} isTimerRunning={isTimerRunning} />
         </div>
@@ -61,8 +64,8 @@ function App() {
             <SetTimer time={breakLength} incrementFunc={addBreakLength} decrementFunc={reduceBreakLength} timerIsRunning={timerIsRunning} />
           </div>
         </div>
-      </div>
-    </div>
+      </main>
+    </>
   );
 }
 
