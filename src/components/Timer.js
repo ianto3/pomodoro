@@ -12,11 +12,11 @@ const Timer = ({ sessionLength, breakLength, isTimerRunning }) => {
     const [seconds, setSeconds] = useState(0);
     const [phase, setPhase] = useState(sessionTime);
     const [totalDeg, setTotalDeg] = useState(0);
-
+    const [mute, setMute] = useState(false);
     const [audio] = useState(new Audio(process.env.PUBLIC_URL + "/assets/sounds/alarm.mp3"));
 
 
-    // Add 0 before digit if needed for display
+    // Add 0 before digit if needed for display.
     const pad = (num) => {
         return num < 10 ? "0" + num : num;
     }
@@ -35,14 +35,14 @@ const Timer = ({ sessionLength, breakLength, isTimerRunning }) => {
             timerIndicator.style.transform = `rotate(${totalDeg + newDegPosition}deg)`;
         }
 
-        // Keep adding degrees to avoid counterclockwise animation to reset degrees each turn
+        // Keep adding degrees to avoid counterclockwise animation to reset degrees each turn.
         if (minutes === 0 && seconds === 0) {
             setTotalDeg(prevTotalDeg => prevTotalDeg + 360);
         }
     }
 
 
-    // Toggle play with spacebar
+    // Toggle play with spacebar.
     const keypress = (ev) => {
         if (ev.key === " ") {
             setPlay(!play);
@@ -57,14 +57,15 @@ const Timer = ({ sessionLength, breakLength, isTimerRunning }) => {
     })
 
 
-    // Control deactivation of timer settings while running countdown
+    // Control deactivation of timer settings controls while running countdown.
     useEffect(() => {
         if (play) {
             isTimerRunning(true);
+            // Enable timer pulse animation
             timerIndicator.classList.add("active");
         } else {
             isTimerRunning(false);
-            // Condition avoids error on loading component since element is null at mount
+            // Condition avoids error on loading component since element is null at mount.
             if (timerIndicator) {
                 timerIndicator.classList.remove("active");
             }
@@ -72,7 +73,17 @@ const Timer = ({ sessionLength, breakLength, isTimerRunning }) => {
     }, [play, isTimerRunning, timerIndicator])
 
 
-    // Handle dynamic changes to settings
+    // Reflects time in title while running
+    useEffect(() => {
+        if (play) {
+            document.title = `Pomodoro: ${pad(minutes)}:${pad(seconds)}`
+        } else {
+            document.title = "Pomodoro Timer"
+        }
+    }, [play, minutes, seconds]);
+
+
+    // Handle dynamic changes to settings.
     useEffect(() => {
         if (phase === sessionTime) {
             setMinutes(sessionLength);
@@ -88,7 +99,6 @@ const Timer = ({ sessionLength, breakLength, isTimerRunning }) => {
     }, [breakLength, phase])
 
 
-    // Counter funcionality
     const counter = () => {
         if (seconds === 0) {
             if (minutes > 0) {
@@ -102,7 +112,9 @@ const Timer = ({ sessionLength, breakLength, isTimerRunning }) => {
                     setPhase(sessionTime);
                     setMinutes(sessionLength);
                 }
-                audio.play();
+                if (!mute) {
+                    audio.play();
+                }
             }
         } else {
             setSeconds(prevSec => prevSec - 1);
@@ -112,7 +124,7 @@ const Timer = ({ sessionLength, breakLength, isTimerRunning }) => {
 
     useInterval(counter, play ? 1000 : null);
 
-    // Handle timer reset
+    // Handle timer reset.
     const reset = () => {
         setPlay(false);
         setPhase(sessionTime);
@@ -144,6 +156,9 @@ const Timer = ({ sessionLength, breakLength, isTimerRunning }) => {
             <p className="key-instructions">
                 Press <kbd>Space</kbd> to toggle the countdown!
             </p>
+            <button className="mute-btn" onClick={() => setMute(!mute)}>
+                <img src={process.env.PUBLIC_URL + `/assets/icons/${mute ? "volume-off" : "volume-on"}.svg`} alt={mute ? "Sound muted" : "Sound on"} />
+            </button>
 
         </>
     )

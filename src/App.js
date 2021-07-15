@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import SetTimer from "./components/SetTimer";
 import Timer from "./components/Timer";
-import './App.css';
 
 
 function App() {
@@ -10,7 +9,6 @@ function App() {
   const [breakLength, setBreakLength] = useState(5);
   const [timerIsRunning, setTimerIsRunning] = useState(false);
 
-  // Time setting handlers
   const addSessionLength = () => {
     if (sessionLength < 60) {
       setSessionLength(prevLength => prevLength + 1);
@@ -43,10 +41,10 @@ function App() {
   }
 
   return (
-    <>
+    <div className="App">
       <header className="container">
         <h1>
-          Pomodoro Tracker
+          Pomodoro Timer
         </h1>
       </header>
 
@@ -65,7 +63,7 @@ function App() {
           </div>
         </div>
       </main>
-    </>
+    </div>
   );
 }
 
