@@ -30,7 +30,6 @@ const Timer = ({ sessionLength, breakLength, isTimerRunning }) => {
 
         if (newDegPosition >= 360) {
             timerIndicator.style.transform = `rotate(${totalDeg + 360}deg)`;
-
         } else {
             timerIndicator.style.transform = `rotate(${totalDeg + newDegPosition}deg)`;
         }
@@ -146,17 +145,17 @@ const Timer = ({ sessionLength, breakLength, isTimerRunning }) => {
                     : <span className="time">{pad(minutes)}:{pad(seconds)}</span>}
             </div>
             <div className="timer-btns">
-                <button className="play-btn" onClick={() => setPlay(!play)}>
+                <button className="play-btn" aria-label="toggle play" onClick={() => setPlay(!play)}>
                     <img src={process.env.PUBLIC_URL + `/assets/icons/${play ? "pause" : "play"}.svg`} alt={play ? "pause" : "play"} />
                 </button>
-                <button className="reset-btn" onClick={reset}>
+                <button className="reset-btn" aria-label="reset" onClick={reset}>
                     <img src={process.env.PUBLIC_URL + `/assets/icons/reset.svg`} alt="reset" />
                 </button>
             </div>
             <p className="key-instructions">
                 Press <kbd>Space</kbd> to toggle the countdown!
             </p>
-            <button className="mute-btn" onClick={() => setMute(!mute)}>
+            <button className="mute-btn" aria-label="toggle mute" onClick={() => setMute(!mute)}>
                 <img src={process.env.PUBLIC_URL + `/assets/icons/${mute ? "volume-off" : "volume-on"}.svg`} alt={mute ? "Sound muted" : "Sound on"} />
             </button>
 

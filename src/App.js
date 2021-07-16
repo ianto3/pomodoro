@@ -17,7 +17,6 @@ function App() {
 
   const reduceSessionLength = () => {
     if (sessionLength > 1) {
-      console.log(sessionLength)
       setSessionLength(prevLength => prevLength - 1);
     }
   }

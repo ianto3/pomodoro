@@ -30,7 +30,10 @@ img {
   /* Responsive images by default */
   height: auto;
   max-width: 100%;
-  user-select: none;
+  -webkit-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  pointer-events: none; /* Prevent dragging */
 }
 
 h1 {
@@ -59,7 +62,7 @@ h3 {
 
 @media only screen and (min-width: 48em) {
   h3{
-    font-size: 3rem;
+    font-size: 2.5rem;
   }
 }
 
@@ -81,10 +84,14 @@ kbd {
 .App {
   height: 100vh;
   width: 100vw;
+  display: -webkit-flex;
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  -webkit-flex-direction: column;
+          flex-direction: column;
+  -webkit-justify-content: center;
+          justify-content: center;
+  -webkit-align-items: center;
+          align-items: center;
 }
 
 .container{
@@ -95,21 +102,26 @@ kbd {
   .container{
     max-width: 120rem;
     margin: 0 auto;
-    /* padding: 5rem; */
   }
 }
 
 .timer{
+  display: -webkit-flex;
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  -webkit-flex-direction: column;
+          flex-direction: column;
+  -webkit-align-items: center;
+          align-items: center;
 }
 
 .time-display{
   position: relative;
+  display: -webkit-flex;
   display: flex;
-  align-items: center;
-  justify-content: center;
+  -webkit-align-items: center;
+          align-items: center;
+  -webkit-justify-content: center;
+          justify-content: center;
   border-radius: 50%;
   min-height: 20rem;
   min-width: 20rem;
@@ -157,6 +169,7 @@ kbd {
   }
 }
 
+/* Used for displaying from 10 seconds to 0 */
 .time.final-countdown {
   padding: 0.4rem;
   font-size: 10rem;
@@ -167,13 +180,32 @@ kbd {
   position: absolute;
   height: 100%;
   width: 100%;
-  transform: rotate(0deg);
+  -moz-transform: rotate(0deg);
+  -webkit-transform: rotate(0deg);
+          transform: rotate(0deg);
   transition: all 1s linear;
+  /* Firefox needs to use less than a second to avoid janky animation */
+          -moz-transition: all 965ms linear; 
   border-radius: 50%;
 }
 
 .time-indicator.active{
-  animation: orange-pulse 1s infinite;
+  -webkit-animation: orange-pulse 1s infinite;
+          animation: orange-pulse 1s infinite;
+}
+
+@-webkit-keyframes orange-pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(var(--orangergb), 0.7);
+  }
+  
+  70% {
+    box-shadow: 0 0 0 30px rgba(var(--orangergb), 0);
+  }
+  
+  100% {
+    box-shadow: 0 0 0 0 rgba(var(--orangergb), 0);
+  }
 }
 
 @keyframes orange-pulse {
@@ -214,8 +246,9 @@ kbd {
 .timer-btns button {
   background-color: transparent;
   border: none;
-  transition: all 0.3s ease-in-out;
-  filter: drop-shadow(3px 3px 5px rgba(0, 0, 0, 0.8));
+  transition: all 0.1s ease-in-out;
+  -webkit-filter: drop-shadow(3px 3px 5px rgba(0, 0, 0, 0.8));
+          filter: drop-shadow(3px 3px 5px rgba(0, 0, 0, 0.8));
 }
 
 .timer-btns button img {
@@ -233,15 +266,20 @@ kbd {
 }
 
 .timer-btns button:hover{
-  transform: scale(1.05);
-  filter: drop-shadow(5px 5px 5px rgba(0, 0, 0, 0.8));
+  -webkit-transform: scale(1.05);
+          transform: scale(1.05);
+  -webkit-filter: drop-shadow(5px 5px 5px rgba(0, 0, 0, 0.8));
+          filter: drop-shadow(5px 5px 5px rgba(0, 0, 0, 0.8));
 }
 
 .timer-btns button:active{
-  transform: scale(0.95);
-  filter: drop-shadow(1px 1px 5px rgba(0, 0, 0, 0.8));
+  -webkit-transform: scale(0.95);
+          transform: scale(0.95);
+  -webkit-filter: drop-shadow(1px 1px 5px rgba(0, 0, 0, 0.8));
+          filter: drop-shadow(1px 1px 5px rgba(0, 0, 0, 0.8));
 }
 
+/* Use space to toggle play message */
 .key-instructions{
   margin-top: 4.5rem;
   display: none;
@@ -264,41 +302,55 @@ kbd {
 }
 
 .settings-controllers{
+  display: -webkit-flex;
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  -webkit-flex-direction: column;
+          flex-direction: column;
+  -webkit-justify-content: center;
+          justify-content: center;
+  -webkit-align-items: center;
+          align-items: center;
 }
 
 .settings-group{
+  display: -webkit-flex;
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  -webkit-flex-direction: column;
+          flex-direction: column;
+  -webkit-justify-content: center;
+          justify-content: center;
+  -webkit-align-items: center;
+          align-items: center;
+  margin: 1.5rem 3rem 0;
 }
 
 @media only screen and (min-width: 36em) {
   .settings-controllers{
-    flex-direction: row;
-    justify-content: space-evenly;
+    -webkit-flex-direction: row;
+            flex-direction: row;
+    -webkit-justify-content: space-evenly;
+            justify-content: space-evenly;
   }
 }
 
 .timer-controls {
+  display: -webkit-flex;
   display: flex;
-  align-items: center;
-  justify-content: center;
+  -webkit-align-items: center;
+          align-items: center;
+  -webkit-justify-content: center;
+          justify-content: center;
+  width: 75%;
 }
 
 .timer-controls span{
-  margin: auto 1.5rem;
+  margin: auto;
   font-size: 3rem;
   text-shadow: 3px 3px 5px rgba(0, 0, 0, 0.6);
 }
 
 @media only screen and (min-width: 48em) {
   .timer-controls span{
-    margin: auto 2.5rem;
     font-size: 3.5rem;
   }
 }
@@ -306,7 +358,8 @@ kbd {
 .timer-controls button {
   background-color: transparent;
   border: none;
-  filter: drop-shadow(3px 3px 5px rgba(0, 0, 0, 0.8));
+  -webkit-filter: drop-shadow(3px 3px 5px rgba(0, 0, 0, 0.8));
+          filter: drop-shadow(3px 3px 5px rgba(0, 0, 0, 0.8));
   transition: all 0.1s ease-in-out;
 }
 
@@ -314,20 +367,18 @@ kbd {
   width: 3rem;
 }
 
-@media only screen and (min-width: 48em) {
-  .timer-controls button img{
-    width: 3.5rem;
-  }
-}
-
 .timer-controls button:hover{
-  transform: scale(1.05);
-  filter: drop-shadow(5px 5px 5px rgba(0, 0, 0, 0.8));
+  -webkit-transform: scale(1.05);
+          transform: scale(1.05);
+  -webkit-filter: drop-shadow(5px 5px 5px rgba(0, 0, 0, 0.8));
+          filter: drop-shadow(5px 5px 5px rgba(0, 0, 0, 0.8));
 }
 
 .timer-controls button:active{
-  transform: scale(0.95);
-  filter: drop-shadow(1px 1px 5px rgba(0, 0, 0, 0.8));
+  -webkit-transform: scale(0.95);
+          transform: scale(0.95);
+  -webkit-filter: drop-shadow(1px 1px 5px rgba(0, 0, 0, 0.8));
+          filter: drop-shadow(1px 1px 5px rgba(0, 0, 0, 0.8));
 }
 
 .timer-controls button:disabled{
